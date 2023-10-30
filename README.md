@@ -1,6 +1,6 @@
 # prand
 
-Pseudo-random number generator.
+Pseudo-random number generator for C89.
 
 ## API
 
