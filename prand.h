@@ -1,6 +1,9 @@
 /**********************************************************************************************
 *
-*   prand - Pseudo-random number generator.
+*   prand - Pseudo-random number generator for C89.
+*
+*   HOMEPAGE:
+*       https://github.com/RobLoach/prand
 *
 *   FEATURES:
 *       - Avoids global state, so that there can be multiple random number generators
