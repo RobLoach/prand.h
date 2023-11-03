@@ -1,6 +1,6 @@
 # prand
 
-Pseudo-random number generator for C89.
+Pseudo-random number generator for C89, based off [raylib](https://www.raylib.com/)'s [rprand.h](https://github.com/raysan5/raylib/blob/master/src/external/rprand.h).
 
 ## API
 
