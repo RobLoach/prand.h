@@ -57,13 +57,94 @@ typedef struct prand_t {
     uint32_t state[4];
 } prand_t;
 
+/**
+ * Initializes a pseudo-random number generator with the given seed.
+ *
+ * @param seed The seed of which to set for the generator.
+ *
+ * @return A pointer to the pseudo-random number generator structure.
+ */
 PRANDAPI prand_t* prand_init(uint64_t seed);
+
+/**
+ * Set the seed for the given pseudo-random number generator.
+ *
+ * @param prand The pseudo-random number generator.
+ * @param seed The seed to set.
+ */
 PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed);
+
+/**
+ * Frees the memory for the given pseudo-random number generator.
+ *
+ * @param prand The pseudo-random number generator to free.
+ */
 PRANDAPI void prand_free(prand_t* prand);
+
+/**
+ * Generate a random unsigned integer between 0 and UINT32_MAX.
+ *
+ * Xoshiro128** generator info:
+ *
+ * Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
+ *
+ * To the extent possible under law, the author has dedicated all copyright
+ * and related and neighboring rights to this software to the public domain
+ * worldwide. This software is distributed without any warranty.
+ *
+ * See <http://creativecommons.org/publicdomain/zero/1.0/>.
+ *
+ * @details This is xoshiro128** 1.1, one of our 32-bit all-purpose, rock-solid
+ * generators. It has excellent speed, a state size (128 bits) that is
+ * large enough for mild parallelism, and it passes all tests we are aware
+ * of.
+ *
+ * Note that version 1.0 had mistakenly s[0] instead of s[1] as state
+ * word passed to the scrambler.
+ *
+ * For generating just single-precision (i.e., 32-bit) floating-point
+ * numbers, xoshiro128+ is even faster.
+ *
+ * The state must be seeded so that it is not everywhere zero.
+ *
+ * @param prand The pseudo-random number generator.
+ */
 PRANDAPI uint32_t prand_rand(prand_t* prand);
+
+/**
+ * Generate an integer between the given min and max values.
+ *
+ * @param prand The pseudo-random number generator.
+ * @param min The minimum value to generate.
+ * @param max The maximum value to generate.
+ */
 PRANDAPI int prand_int(prand_t* prand, int min, int max);
+
+/**
+ * Generate an unsigned 32-bit integer between the given min and max values.
+ *
+ * @param prand The pseudo-random number generator.
+ * @param min The minimum value to generate.
+ * @param max The maximum value to generate.
+ */
 PRANDAPI uint32_t prand_uint32(prand_t* prand, uint32_t min, uint32_t max);
+
+/**
+ * Generate an unsigned integer between the given min and max values.
+ *
+ * @param prand The pseudo-random number generator.
+ * @param min The minimum value to generate.
+ * @param max The maximum value to generate.
+ */
 PRANDAPI unsigned int prand_uint(prand_t* prand, unsigned int min, unsigned int max);
+
+/**
+ * Generate an float between the given min and max values.
+ *
+ * @param prand The pseudo-random number generator.
+ * @param min The minimum value to generate.
+ * @param max The maximum value to generate.
+ */
 PRANDAPI float prand_float(prand_t* prand, float min, float max);
 
 #endif // PRAND_H__
@@ -97,31 +178,6 @@ uint64_t prand_splitmix64(prand_t* prand) {
 inline uint32_t prand_rotate_left(const uint32_t x, int k) {
     return (x << k) | (x >> (32 - k));
 }
-
-/**
- * Xoshiro128** generator info:
- *
- * Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)
- *
- * To the extent possible under law, the author has dedicated all copyright
- * and related and neighboring rights to this software to the public domain
- * worldwide. This software is distributed without any warranty.
- *
- * See <http://creativecommons.org/publicdomain/zero/1.0/>.
- *
- * @details This is xoshiro128** 1.1, one of our 32-bit all-purpose, rock-solid
- * generators. It has excellent speed, a state size (128 bits) that is
- * large enough for mild parallelism, and it passes all tests we are aware
- * of.
- *
- * Note that version 1.0 had mistakenly s[0] instead of s[1] as state
- * word passed to the scrambler.
- *
- * For generating just single-precision (i.e., 32-bit) floating-point
- * numbers, xoshiro128+ is even faster.
- *
- * The state must be seeded so that it is not everywhere zero.
- */
 uint32_t prand_rand(prand_t* prand) {
     const uint32_t result = prand_rotate_left(prand->state[1] * 5, 7) * 9;
     const uint32_t t = prand->state[1] << 9;
@@ -152,15 +208,15 @@ PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed) {
 }
 
 PRANDAPI int prand_int(prand_t* prand, int min, int max) {
-    return (int)(prand_rand(prand) % (uint32_t)INT32_MAX) % (max - min) + min;
+    return (int)(prand_rand(prand) % (uint32_t)INT32_MAX) % (max - min + 1) + min;
 }
 
 PRANDAPI uint32_t prand_uint32(prand_t* prand, uint32_t min, uint32_t max) {
-    return prand_rand(prand) % (max - min) + min;
+    return prand_rand(prand) % (max - min + 1) + min;
 }
 
 PRANDAPI unsigned int prand_uint(prand_t* prand, unsigned int min, unsigned int max) {
-    return prand_rand(prand) % (max - min) + min;
+    return prand_rand(prand) % (max - min + 1) + min;
 }
 
 PRANDAPI float prand_float(prand_t* prand, float min, float max) {
