@@ -157,7 +157,7 @@ PRANDAPI float prand_float(prand_t* prand, float min, float max);
     #define PRAND_MALLOC(sz) malloc(sz)
 #endif
 
-#ifndef RPRAND_FREE
+#ifndef PRAND_FREE
     #include <stdlib.h>
     #define PRAND_FREE(ptr) free(ptr)
 #endif
