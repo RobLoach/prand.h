@@ -147,6 +147,8 @@ PRANDAPI unsigned int prand_uint(prand_t* prand, unsigned int min, unsigned int 
  */
 PRANDAPI float prand_float(prand_t* prand, float min, float max);
 
+PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
+
 #endif // PRAND_H__
 
 #ifdef PRAND_IMPLEMENTATION
@@ -178,6 +180,7 @@ uint64_t prand_splitmix64(prand_t* prand) {
 inline uint32_t prand_rotate_left(const uint32_t x, int k) {
     return (x << k) | (x >> (32 - k));
 }
+
 uint32_t prand_rand(prand_t* prand) {
     const uint32_t result = prand_rotate_left(prand->state[1] * 5, 7) * 9;
     const uint32_t t = prand->state[1] << 9;
