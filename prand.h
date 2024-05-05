@@ -65,7 +65,7 @@ typedef struct prand_t {
 /**
  * Initializes a pseudo-random number generator with the given seed.
  *
- * @param seed The seed of which to set for the generator.
+ * @param seed The seed of which to set for the generator. If set to 0, a default seed will be used.
  *
  * @return A pointer to the pseudo-random number generator structure.
  */
@@ -75,7 +75,7 @@ PRANDAPI prand_t* prand_init(uint64_t seed);
  * Set the seed for the given pseudo-random number generator.
  *
  * @param prand The pseudo-random number generator.
- * @param seed The seed to set.
+ * @param seed The seed to set. If set to 0, a default seed will be used.
  */
 PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed);
 
@@ -218,6 +218,11 @@ uint32_t prand_rand(prand_t* prand) {
 PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed) {
     if (prand == NULL) {
         return;
+    }
+
+    // Default SplitMix64 seed
+    if (seed == 0) {
+        seed = 0xAABBCCDD;
     }
 
     prand->seed = seed;
