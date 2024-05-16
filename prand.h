@@ -197,7 +197,7 @@ extern "C" {
 #endif
 
 PRANDAPI prand_t* prand_init(uint64_t seed) {
-    prand_t* prand = PRAND_MALLOC(sizeof(prand_t));
+    prand_t* prand = (prand_t*)PRAND_MALLOC(sizeof(prand_t));
     prand_set_seed(prand, seed);
     return prand;
 }
