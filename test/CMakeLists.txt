@@ -1,6 +1,6 @@
 # prand_test
 add_executable(prand_test prand_test.c)
-target_compile_options(prand_test PRIVATE -Wall -Wextra -Wconversion -Wsign-conversion)
+target_compile_options(prand_test PRIVATE -Werror -Wall -Wpedantic -Wextra)
 target_link_libraries(prand_test PUBLIC
     prand
 )
