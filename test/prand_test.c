@@ -6,12 +6,12 @@
 
 int main() {
     int i;
-    prand_t* prand = prand_init(0);
-    assert(prand != NULL);
+    prand_t prand;
+    prand_init(&prand, 0);
 
     /* prand_int */
     for (i = 0; i < 10000; i++) {
-        int result = prand_int(prand, -100, 200);
+        int result = prand_int(&prand, -100, 200);
         printf("Random: %d\n", result);
         assert(result >= -100);
         assert(result <= 200);
@@ -19,7 +19,7 @@ int main() {
 
     /* prand_uint */
     for (i = 0; i < 10000; i++) {
-        unsigned int result = prand_uint(prand, 100, 500);
+        unsigned int result = prand_uint(&prand, 100, 500);
         printf("Random: %u\n", result);
         assert(result >= 100);
         assert(result <= 500);
@@ -27,12 +27,11 @@ int main() {
 
     /* prand_float */
     for (i = 0; i < 10000; i++) {
-        float result = prand_float(prand, -0.5f, 0.5f);
+        float result = prand_float(&prand, -0.5f, 0.5f);
         printf("Random: %f\n", result);
         assert(result >= -0.5f);
         assert(result <= 0.5f);
     }
 
-    prand_free(prand);
     return 0;
 }

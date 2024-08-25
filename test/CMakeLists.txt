@@ -6,7 +6,7 @@ target_link_libraries(prand_test PUBLIC
 )
 
 
-# C11 Standard
+# C89 Standard
 set_property(TARGET prand_test PROPERTY C_STANDARD 90)
 set_property(TARGET prand_test PROPERTY C_STANDARD_REQUIRED TRUE)
 
