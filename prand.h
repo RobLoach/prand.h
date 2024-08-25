@@ -63,28 +63,12 @@ typedef struct prand_t {
 } prand_t;
 
 /**
- * Initializes a pseudo-random number generator with the given seed.
- *
- * @param seed The seed of which to set for the generator. If set to 0, a default seed will be used.
- *
- * @return A pointer to the pseudo-random number generator structure.
- */
-PRANDAPI prand_t* prand_init(uint64_t seed);
-
-/**
  * Set the seed for the given pseudo-random number generator.
  *
  * @param prand The pseudo-random number generator.
  * @param seed The seed to set. If set to 0, a default seed will be used.
  */
 PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed);
-
-/**
- * Frees the memory for the given pseudo-random number generator.
- *
- * @param prand The pseudo-random number generator to free.
- */
-PRANDAPI void prand_free(prand_t* prand);
 
 /**
  * Generate a random unsigned integer between 0 and UINT32_MAX.
@@ -174,21 +158,9 @@ PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
 #ifdef PRAND_IMPLEMENTATION
 #ifndef PRAND_IMPLEMENTATION_ONCE
 
-#ifndef PRAND_MALLOC
-    #include <stdlib.h>
-    #define PRAND_MALLOC(sz) malloc(sz)
+#ifndef NULL
+    #include <stddef.h>
 #endif
-
-#ifndef PRAND_FREE
-    #include <stdlib.h>
-    #define PRAND_FREE(ptr) free(ptr)
-#endif
-
-PRANDAPI prand_t* prand_init(uint64_t seed) {
-    prand_t* prand = PRAND_MALLOC(sizeof(prand_t));
-    prand_set_seed(prand, seed);
-    return prand;
-}
 
 uint64_t prand_splitmix64(prand_t* prand) {
     uint64_t z = (prand->seed += 0x9e3779b97f4a7c15);
@@ -250,14 +222,6 @@ PRANDAPI unsigned int prand_uint(prand_t* prand, unsigned int min, unsigned int 
 PRANDAPI float prand_float(prand_t* prand, float min, float max) {
     float scale = (float)prand_rand(prand) / (float)PRAND_RAND_MAX;
     return ((max - min) * scale) + min;
-}
-
-PRANDAPI void prand_free(prand_t* prand) {
-    if (prand == NULL) {
-        return;
-    }
-
-    PRAND_FREE(prand);
 }
 
 #endif /* PRAND_IMPLEMENTATION_ONCE */
