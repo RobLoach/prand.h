@@ -52,6 +52,10 @@
     #define PRAND_RAND_MAX UINT32_MAX
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Pseudo-random number generator.
  *
@@ -169,6 +173,10 @@ PRANDAPI float prand_float(prand_t* prand, float min, float max);
  */
 PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* PRAND_H__ */
 
 #ifdef PRAND_IMPLEMENTATION
@@ -184,8 +192,12 @@ PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
     #define PRAND_FREE(ptr) free(ptr)
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 PRANDAPI prand_t* prand_init(uint64_t seed) {
-    prand_t* prand = PRAND_MALLOC(sizeof(prand_t));
+    prand_t* prand = (prand_t*)PRAND_MALLOC(sizeof(prand_t));
     prand_set_seed(prand, seed);
     return prand;
 }
@@ -259,6 +271,10 @@ PRANDAPI void prand_free(prand_t* prand) {
 
     PRAND_FREE(prand);
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PRAND_IMPLEMENTATION_ONCE */
 #endif /* PRAND_IMPLEMENTATION */
