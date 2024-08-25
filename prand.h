@@ -55,20 +55,29 @@
 /**
  * Pseudo-random number generator.
  *
- * @see prant_init()
+ * @see prand_init()
  */
 typedef struct prand_t {
     uint64_t seed;
     uint32_t state[4];
 } prand_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
- * Set the seed for the given pseudo-random number generator.
+ * Initialize the given pseudo-random number generator with the provided seed.
  *
  * @param prand The pseudo-random number generator.
  * @param seed The seed to set. If set to 0, a default seed will be used.
+ *
+ * @code
+ * prand_t prand;
+ * prand_init(&prand, 0);
+ * @endcode
  */
-PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed);
+PRANDAPI void prand_init(prand_t* prand, uint64_t seed);
 
 /**
  * Generate a random unsigned integer between 0 and UINT32_MAX.
@@ -153,6 +162,10 @@ PRANDAPI float prand_float(prand_t* prand, float min, float max);
  */
 PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* PRAND_H__ */
 
 #ifdef PRAND_IMPLEMENTATION
@@ -160,6 +173,10 @@ PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
 
 #ifndef NULL
     #include <stddef.h>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 uint64_t prand_splitmix64(prand_t* prand) {
@@ -187,7 +204,7 @@ uint32_t prand_rand(prand_t* prand) {
     return result;
 }
 
-PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed) {
+PRANDAPI void prand_init(prand_t* prand, uint64_t seed) {
     if (prand == NULL) {
         return;
     }
@@ -223,6 +240,10 @@ PRANDAPI float prand_float(prand_t* prand, float min, float max) {
     float scale = (float)prand_rand(prand) / (float)PRAND_RAND_MAX;
     return ((max - min) * scale) + min;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PRAND_IMPLEMENTATION_ONCE */
 #endif /* PRAND_IMPLEMENTATION */

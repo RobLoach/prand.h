@@ -5,9 +5,7 @@ Pseudo-random number generator for C89, based off [raylib](https://www.raylib.co
 ## API
 
 ``` c
-prand_t* prand_init(uint64_t seed);
-void prand_set_seed(prand_t* prand, uint64_t seed);
-void prand_free(prand_t* prand);
+void prand_init(prand_t* prand, uint64_t seed);
 uint32_t prand_rand(prand_t* prand);
 int prand_int(prand_t* prand, int min, int max);
 uint32_t prand_uint32(prand_t* prand, uint32_t min, uint32_t max);
@@ -24,7 +22,8 @@ float prand_float(prand_t* prand, float min, float max);
 #include <stdio.h>
 
 int main() {
-    prand_t* prand = prand_init(0);
+    prand_t prand;
+    prand_init(&prand, 0);
 
     int result = prand_int(prand, -100, 200);
     printf("Random: %d\n", result);

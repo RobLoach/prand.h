@@ -7,6 +7,7 @@
 int main() {
     int i;
     prand_t prand;
+    prand_init(&prand, 0);
 
     /* prand_int */
     for (i = 0; i < 10000; i++) {
