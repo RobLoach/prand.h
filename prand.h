@@ -46,7 +46,7 @@
     #define PRANDAPI
 #endif
 
-#include <stdint.h> // uint64_t, uint32_t, UINT32_MAX
+#include <stdint.h> /* uint64_t, uint32_t, UINT32_MAX */
 
 #ifndef PRAND_RAND_MAX
     #define PRAND_RAND_MAX UINT32_MAX
@@ -177,7 +177,7 @@ PRANDAPI uint32_t prand_rotate_left(const uint32_t x, int k);
 }
 #endif
 
-#endif // PRAND_H__
+#endif /* PRAND_H__ */
 
 #ifdef PRAND_IMPLEMENTATION
 #ifndef PRAND_IMPLEMENTATION_ONCE
@@ -232,15 +232,15 @@ PRANDAPI void prand_set_seed(prand_t* prand, uint64_t seed) {
         return;
     }
 
-    // Default SplitMix64 seed
+    /* Default SplitMix64 seed */
     if (seed == 0) {
         seed = 0xAABBCCDD;
     }
 
     prand->seed = seed;
 
-    // To generate the Xoshiro128** state, we use SplitMix64 generator first
-    // We generate 4 pseudo-random 64bit numbers that we combine using their LSB|MSB
+    /* To generate the Xoshiro128** state, we use SplitMix64 generator first
+     * We generate 4 pseudo-random 64bit numbers that we combine using their LSB|MSB */
     prand->state[0] = (uint32_t)(prand_splitmix64(prand) & 0xffffffff);
     prand->state[1] = (uint32_t)((prand_splitmix64(prand) & 0xffffffff00000000) >> 32);
     prand->state[2] = (uint32_t)(prand_splitmix64(prand) & 0xffffffff);
@@ -276,5 +276,5 @@ PRANDAPI void prand_free(prand_t* prand) {
 }
 #endif
 
-#endif // PRAND_IMPLEMENTATION_ONCE
-#endif // PRAND_IMPLEMENTATION
+#endif /* PRAND_IMPLEMENTATION_ONCE */
+#endif /* PRAND_IMPLEMENTATION */

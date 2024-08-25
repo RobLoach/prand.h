@@ -9,7 +9,7 @@ int main() {
     prand_t* prand = prand_init(0);
     assert(prand != NULL);
 
-    // prand_int
+    /* prand_int */
     for (i = 0; i < 10000; i++) {
         int result = prand_int(prand, -100, 200);
         printf("Random: %d\n", result);
@@ -17,7 +17,7 @@ int main() {
         assert(result <= 200);
     }
 
-    // prand_uint
+    /* prand_uint */
     for (i = 0; i < 10000; i++) {
         unsigned int result = prand_uint(prand, 100, 500);
         printf("Random: %u\n", result);
@@ -25,7 +25,7 @@ int main() {
         assert(result <= 500);
     }
 
-    // prand_float
+    /* prand_float */
     for (i = 0; i < 10000; i++) {
         float result = prand_float(prand, -0.5f, 0.5f);
         printf("Random: %f\n", result);
