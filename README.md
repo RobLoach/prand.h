@@ -25,7 +25,7 @@ int main() {
     prand_t prand;
     prand_init(&prand, 0);
 
-    int result = prand_int(prand, -100, 200);
+    int result = prand_int(&prand, -100, 200);
     printf("Random: %d\n", result);
 
     return 0;
