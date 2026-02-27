@@ -33,5 +33,12 @@ int main() {
         assert(result <= 0.5f);
     }
 
+    /* prand_double */
+    for (i = 0; i < 10000; i++) {
+        double result = prand_double(&prand, -0.5, 0.5);
+        assert(result >= -0.5);
+        assert(result <= 0.5);
+    }
+
     return 0;
 }

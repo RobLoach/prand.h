@@ -11,6 +11,7 @@ int prand_int(prand_t* prand, int min, int max);
 uint32_t prand_uint32(prand_t* prand, uint32_t min, uint32_t max);
 unsigned int prand_uint(prand_t* prand, unsigned int min, unsigned int max);
 float prand_float(prand_t* prand, float min, float max);
+float prand_double(prand_t* prand, double min, double max);
 ```
 
 ## Example
