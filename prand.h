@@ -256,7 +256,7 @@ PRANDAPI float prand_float(prand_t* prand, float min, float max) {
 }
 
 PRANDAPI double prand_double(prand_t* prand, double min, double max) {
-    float scale = (double)prand_rand(prand) / (double)PRAND_RAND_MAX;
+    double scale = (double)prand_rand(prand) / (double)PRAND_RAND_MAX;
     return ((max - min) * scale) + min;
 }
 
